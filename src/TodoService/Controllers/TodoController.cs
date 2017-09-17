@@ -24,7 +24,6 @@ namespace TodoService.Controllers
     [Route("api/[controller]")]
     public class TodoController
     {
-
         private string _connectionString;
 
         public TodoController()
@@ -50,35 +49,5 @@ namespace TodoService.Controllers
                 return connection.Query<TodoModel>("SELECT id,checked,text FROM todo WHERE id=@Id", new {Id=id}).FirstOrDefault();
             }
         }
-
-
-        [HttpGet]
-        public IEnumerable<TodoModel> Get()
-        {
-            using(var connection = new MySqlConnection(_connectionString))
-            {
-                return connection.Query<TodoModel>("SELECT id,checked,text FROM todo");
-            }
-        }
-
-        [HttpPut]
-        public void Put([FromBody]TodoModel model)
-        {
-            using(var connection = new MySqlConnection(_connectionString))
-            {
-                connection.Execute(@"UPDATE todo SET checked = @Checked, text = @Text WHERE id=@Id", model);
-            }
-        }
-
-        [HttpDelete("{id}")]
-        public TodoModel Delete(string id)
-        {
-            var modelToDelete = Get(id);
-            using(var connection = new MySqlConnection(_connectionString))
-            {
-                connection.Execute("DELETE FROM todo WHERE id=@Id", new {Id = id});
-            }
-            return modelToDelete;
-        }        
     }
 }

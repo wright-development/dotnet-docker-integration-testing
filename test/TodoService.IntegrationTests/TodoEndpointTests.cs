@@ -24,31 +24,6 @@ namespace TodoService.IntegrationTests
         }
         
         [Fact]
-        public async void should_return_ok_on_post()
-        {
-            var client = new HttpClient();
-            var todo = new TodoModel{ Checked = false, Text = "Test Text" };
-            var result = await client.PostAsync(_url, new StringContent(JsonConvert.SerializeObject(todo), Encoding.UTF8, "application/json"));
-
-            result.StatusCode.ShouldBe(HttpStatusCode.OK);
-       
-        }
-
-        [Fact]
-        public async void should_assign_id_on_post()
-        {
-            var client = new HttpClient();
-            var expectedModel = new TodoModel{ Checked = false, Text = "Test Text" };
-            var result = await client.PostAsync(_url, new StringContent(JsonConvert.SerializeObject(expectedModel),Encoding.UTF8, "application/json"));
-
-            var jsonString= await result.Content.ReadAsStringAsync();
-            Console.WriteLine("Results: " + jsonString);
-            var actualModel = JsonConvert.DeserializeObject<TodoModel>(jsonString);
-
-            actualModel.Id.ShouldNotBeEmpty();
-        }
-
-        [Fact]
         public async void should_add_to_database_on_post()
         {
             var client = new HttpClient();
