@@ -1,0 +1,3 @@
+USE todosdb;
+
+CREATE TABLE IF NOT EXISTS todo (id SERIAL, text VARCHAR(100), checked BOOLEAN)
