@@ -1,5 +1,6 @@
+# /Dockerfile.integration
 FROM microsoft/dotnet:1.1.2-sdk as builder
 COPY . /app
 WORKDIR /app/test/TodoService.IntegrationTests
-RUN curl https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh > /app/wait_for_it.sh
-RUN dotnet restore
+RUN curl https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh > /app/wait_for_it.sh \
+    && dotnet restore

@@ -11,6 +11,7 @@ services:
     entrypoint: bash /app/wait_for_it.sh web:5000 -t 0 -- dotnet test
     depends_on:
       - web
+      - db
   web:
     build: .
     ports: 
@@ -25,8 +26,11 @@ services:
     image: mysql
     ports:
       - 3306:3306
+    # Start the container with a todosdb, and password as the root users password
     environment: 
       - MYSQL_DATABASE=todosdb
       - MYSQL_ROOT_PASSWORD=password
+    # Volume the scripts folder over that we setup earlier.
     volumes: 
       - ./Scripts:/docker-entrypoint-initdb.d
+
